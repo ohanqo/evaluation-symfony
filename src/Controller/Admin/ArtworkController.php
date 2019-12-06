@@ -65,7 +65,7 @@ class ArtworkController extends AbstractController
 
             $this->entityManager->persist($entity);
             $this->entityManager->flush();
-            $this->addFlash('notice', "L'œuvre a été ajouté.");
+            $this->addFlash('notice', "L'œuvre a été ajoutée.");
         }
 
         return $this->render('admin/artwork/create.html.twig', [
@@ -104,7 +104,7 @@ class ArtworkController extends AbstractController
             $this->entityManager->persist($entity);
             $this->entityManager->flush();
 
-            $this->addFlash('notice', "L'œuvre a été modifié.");
+            $this->addFlash('notice', "L'œuvre a été modifiée.");
             return $this->redirectToRoute('admin.artwork.index');
         }
 
