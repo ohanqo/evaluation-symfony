@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>
+        {{ site_name }}
+    </title>
+
+    {{ encore_entry_link_tags('app') }}
+</head>
+<body class="d-flex flex-column min-vh-100">
+
+{% include "inc/nav.html.twig" %}
+<div class="container flex-grow-1">
+    <div class="row">
+        {% block content %}
+        {% endblock %}
+    </div>
+</div>
+{% include "inc/footer.html.twig" %}
+
+{{ encore_entry_script_tags('app') }}
+
+</body>
+</html>
