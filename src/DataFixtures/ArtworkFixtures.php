@@ -10,11 +10,10 @@ use Faker\Factory as Faker;
 
 class ArtworkFixtures extends Fixture implements OrderedFixtureInterface
 {
-    public $categories = ["paintCategory", "drawingCategory", "sculptureCategory"];
-
     public function load(ObjectManager $manager)
     {
         $faker = Faker::create('fr_FR');
+        $categories = CategoryFixtures::$categories;
 
         for ($i = 0; $i < 20; $i++) {
             $artwork = new Artwork();
@@ -22,8 +21,8 @@ class ArtworkFixtures extends Fixture implements OrderedFixtureInterface
             $artwork->setDescription($faker->text);
             $artwork->setPicture($faker->image('public/img/artworks', 800, 450, null, false));
 
-            $randomCategoryIndex = random_int(0, count($this->categories) - 1);
-            $randomCategoryName = $this->categories[$randomCategoryIndex];
+            $randomCategoryIndex = random_int(0, count($categories) - 1);
+            $randomCategoryName = $categories[$randomCategoryIndex];
             $artwork->setCategory($this->getReference($randomCategoryName));
 
             $manager->persist($artwork);

@@ -9,22 +9,16 @@ use Doctrine\Common\Persistence\ObjectManager;
 
 class CategoryFixtures extends Fixture implements OrderedFixtureInterface
 {
+    public static $categories = ["Peinture", "Dessin", "Sculpture"];
+
     public function load(ObjectManager $manager)
     {
-        $paintCategory = new Category();
-        $paintCategory->setName("Peinture");
-        $this->addReference("paintCategory", $paintCategory);
-        $manager->persist($paintCategory);
-
-        $drawingCategory = new Category();
-        $drawingCategory->setName("Dessin");
-        $this->addReference("drawingCategory", $drawingCategory);
-        $manager->persist($drawingCategory);
-
-        $sculptureCategory = new Category();
-        $sculptureCategory->setName("Sculpture");
-        $this->addReference("sculptureCategory", $sculptureCategory);
-        $manager->persist($sculptureCategory);
+        foreach (CategoryFixtures::$categories as $categoryName) {
+            $category = new Category();
+            $category->setName($categoryName);
+            $this->addReference($categoryName, $category);
+            $manager->persist($category);
+        }
 
         $manager->flush();
     }
