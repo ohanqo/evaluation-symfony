@@ -22,7 +22,11 @@ class FileService
 
     public function remove(string $directory, string $filename)
     {
-        unlink("$directory/$filename");
+        $pathToFile = "$directory/$filename";
+
+        if (file_exists($pathToFile)) {
+            unlink($pathToFile);
+        }
     }
 
     public function getFileName()

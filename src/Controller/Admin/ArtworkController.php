@@ -17,12 +17,28 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class ArtworkController extends AbstractController
 {
+    private $fileService;
+    private $artworkRepository;
+    private $entityManager;
+    private $pictureFolderPath = 'img/artworks';
+
+    public function __construct(
+        FileService $fileService,
+        ArtworkRepository $artworkRepository,
+        EntityManagerInterface $entityManager
+    )
+    {
+        $this->fileService = $fileService;
+        $this->artworkRepository = $artworkRepository;
+        $this->entityManager = $entityManager;
+    }
+
     /**
      * @Route("/", name="admin.artwork.index")
      */
-    public function index(ArtworkRepository $artworkRepository)
+    public function index()
     {
-        $artworks = $artworkRepository->findAll();
+        $artworks = $this->artworkRepository->findAll();
 
         return $this->render('admin/artwork/index.html.twig', [
             'artworks' => $artworks
@@ -32,7 +48,7 @@ class ArtworkController extends AbstractController
     /**
      * @Route("/create", name="admin.artwork.create")
      */
-    public function create(Request $request, EntityManagerInterface $entityManager, FileService $fileService)
+    public function create(Request $request)
     {
         $model = new Artwork();
         $form = $this->createForm(ArtworkType::class, $model);
@@ -43,12 +59,12 @@ class ArtworkController extends AbstractController
             $picture = $form['picture']->getData();
 
             if ($picture instanceof UploadedFile) {
-                $fileService->upload($picture, 'img/artworks');
-                $entity->setPicture($fileService->getFileName());
+                $this->fileService->upload($picture, $this->pictureFolderPath);
+                $entity->setPicture($this->fileService->getFileName());
             }
 
-            $entityManager->persist($entity);
-            $entityManager->flush();
+            $this->entityManager->persist($entity);
+            $this->entityManager->flush();
             $this->addFlash('notice', "L'œuvre a été ajouté.");
         }
 
@@ -60,9 +76,9 @@ class ArtworkController extends AbstractController
     /**
      * @Route("/edit/{id}", name="admin.artwork.edit")
      */
-    public function update(Request $request, EntityManagerInterface $entityManager, int $id, ArtworkRepository $artworkRepository, FileService $fileService)
+    public function update(Request $request, int $id)
     {
-        $artwork = $artworkRepository->find($id);
+        $artwork = $this->artworkRepository->find($id);
 
         if (!$artwork) {
             throw $this->createNotFoundException("L'œuvre n'existe pas.");
@@ -77,18 +93,16 @@ class ArtworkController extends AbstractController
             $picture = $form['picture']->getData();
 
             if ($picture instanceof UploadedFile) {
-                $fileService->upload($picture, 'img/artworks');
-                $entity->setPicture($fileService->getFileName());
+                $this->fileService->upload($picture, $this->pictureFolderPath);
+                $entity->setPicture($this->fileService->getFileName());
 
-                if (file_exists("img/artworks/{$previousImage}")) {
-                    $fileService->remove('img/artworks', $previousImage);
-                }
+                $this->fileService->remove($this->pictureFolderPath, $previousImage);
             } else {
                 $entity->setPicture($previousImage);
             }
 
-            $entityManager->persist($entity);
-            $entityManager->flush();
+            $this->entityManager->persist($entity);
+            $this->entityManager->flush();
 
             $this->addFlash('notice', "L'œuvre a été modifié.");
             return $this->redirectToRoute('admin.artwork.index');
@@ -103,19 +117,18 @@ class ArtworkController extends AbstractController
     /**
      * @Route("/delete/{id}", name="admin.artwork.delete")
      */
-    public function destroy(int $id, ArtworkRepository $artworkRepository, EntityManagerInterface $entityManager, FileService $fileService)
+    public function destroy(int $id)
     {
-        $artwork = $artworkRepository->find($id);
+        $artwork = $this->artworkRepository->find($id);
 
         if (!$artwork) {
             throw $this->createNotFoundException("L'œuvre n'existe pas.");
         }
-        $entityManager->remove($artwork);
-        $entityManager->flush();
 
-        if (file_exists("img/artworks/{$artwork->getPicture()}")) {
-            $fileService->remove('img/artworks', $artwork->getPicture());
-        }
+        $this->entityManager->remove($artwork);
+        $this->entityManager->flush();
+
+        $this->fileService->remove($this->pictureFolderPath, $artwork->getPicture());
 
         $this->addFlash('notice', "L'œuvre a été supprimée.");
         return $this->redirectToRoute('admin.artwork.index');
