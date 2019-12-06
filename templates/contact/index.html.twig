@@ -10,7 +10,7 @@
         <div class="row">
             <div class="d-sm-none d-md-block col-md-5">
                 <a class="d-block h-100 w-100" href="{{ url('artwork.show', { 'id': artwork.id }) }}">
-                    <img class="h-100 w-100" src="/img/artworks/{{ artwork.picture }}"
+                    <img class="h-100 w-100" src="{{ artworks_path }}{{ artwork.picture }}"
                          alt="{{ artwork.name }} artwork picture">
                 </a>
             </div>

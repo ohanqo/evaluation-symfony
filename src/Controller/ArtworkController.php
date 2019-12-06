@@ -24,7 +24,7 @@ class ArtworkController extends AbstractController
             $artworks[$category->getName()] = $artworkRepository->findBy(['category' => $category]);
         }
 
-        return $this->render('artworks/index.html.twig', [
+        return $this->render('artwork/index.html.twig', [
             'artworksByCategory' => $artworks
         ]);
     }
@@ -40,7 +40,7 @@ class ArtworkController extends AbstractController
             throw $this->createNotFoundException("L'œuvre n'existe pas.");
         }
 
-        return $this->render('artworks/show.html.twig', [
+        return $this->render('artwork/show.html.twig', [
             'artwork' => $artwork
         ]);
     }
