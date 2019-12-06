@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class ArtworkController extends AbstractController
 {
     /**
-     * @Route("/", name="artwork")
+     * @Route("/", name="artwork.index")
      */
     public function index(ArtworkRepository $artworkRepository, CategoryRepository $categoryRepository)
     {
@@ -26,6 +26,22 @@ class ArtworkController extends AbstractController
 
         return $this->render('artworks/index.html.twig', [
             'artworksByCategory' => $artworks
+        ]);
+    }
+
+    /**
+     * @Route("/{id}", name="artwork.show")
+     */
+    public function show(int $id, ArtworkRepository $artworkRepository)
+    {
+        $artwork = $artworkRepository->find($id);
+
+        if (!$artwork) {
+            throw $this->createNotFoundException("L'œuvre n'existe pas.");
+        }
+
+        return $this->render('artworks/show.html.twig', [
+            'artwork' => $artwork
         ]);
     }
 }

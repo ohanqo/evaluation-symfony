@@ -1,0 +1,17 @@
+{% extends 'parent.html.twig' %}
+
+{% block content %}
+    <div class="row mt-5">
+        <div class="col-sm-12 col-md-8">
+            <img class="w-100" src="/img/artworks/{{ artwork.picture }}" alt="{{ artwork.name }} image">
+        </div>
+
+        <div class="col-sm-12 col-md-4 d-flex flex-column justify-content-end">
+            <h2>{{ artwork.name }}</h2>
+
+            <span class="text-uppercase text-black-50 text-sm my-2">{{ artwork.category.name }}</span>
+
+            <p>{{ artwork.description }}</p>
+        </div>
+    </div>
+{% endblock %}
