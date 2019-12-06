@@ -26,6 +26,11 @@ class Exhibition
      */
     private $date;
 
+    /**
+     * @ORM\Column(type="string", length=150)
+     */
+    private $name;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -51,6 +56,18 @@ class Exhibition
     public function setDate(\DateTimeInterface $date): self
     {
         $this->date = $date;
+
+        return $this;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): self
+    {
+        $this->name = $name;
 
         return $this;
     }
