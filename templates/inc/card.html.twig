@@ -1,7 +1,9 @@
-<div class="card">
-    <img src="/img/artworks/{{ artwork.picture }}" class="card-img-top" alt="Image de l'œuvre">
-    <div class="card-body">
-        <h5 class="card-title">{{ artwork.name }}</h5>
-        <p class="card-text">{{ artwork.description | truncate(20, true) }}</p>
+<a class="text-dark" href="{{ url('artwork.show', { id: artwork.id }) }}">
+    <div class="card">
+        <img src="/img/artworks/{{ artwork.picture }}" class="card-img-top" alt="Image de l'œuvre">
+        <div class="card-body">
+            <h5 class="card-title">{{ artwork.name }}</h5>
+            <p class="card-text">{{ artwork.description | truncate(20, true) }}</p>
+        </div>
     </div>
-</div>
+</a>
