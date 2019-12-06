@@ -15,6 +15,10 @@
                     <div class="carousel-item {{ key == 0 ? 'active' : '' }}">
                         <a href="{{ url('artwork.show', { id: artwork.id }) }}">
                             <img class="d-block w-100" src="/img/artworks/{{ artwork.picture }}" alt="">
+                            <div class="carousel-caption d-none d-md-block">
+                                <h5>{{ artwork.name }}</h5>
+                                <p>{{ artwork.description | truncate(20, true) }}</p>
+                            </div>
                         </a>
                     </div>
                 {% endfor %}

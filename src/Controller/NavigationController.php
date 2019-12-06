@@ -7,12 +7,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class NavigationController extends AbstractController
 {
-    public function nav(CategoryRepository $categoryRepository)
+    public function nav($app, CategoryRepository $categoryRepository)
     {
         $categories = $categoryRepository->findAll();
 
         return $this->render('inc/nav.html.twig', [
-            'categories' => $categories
+            'categories' => $categories,
+            'route_name' => $app->get('_route')
         ]);
     }
 
@@ -21,7 +22,7 @@ class NavigationController extends AbstractController
         $categories = $categoryRepository->findAll();
 
         return $this->render('inc/footer.html.twig', [
-            'categories' => $categories
+            'categories' => $categories,
         ]);
     }
 }

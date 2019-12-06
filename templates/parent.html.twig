@@ -12,7 +12,7 @@
 </head>
 <body class="d-flex flex-column min-vh-100">
 
-{{ render(controller('App\\Controller\\NavigationController:nav')) }}
+{{ render(controller('App\\Controller\\NavigationController:nav', { 'app': app.request })) }}
 <div class="container flex-grow-1">
     <div class="row">
         {% block content %}
