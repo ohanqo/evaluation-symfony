@@ -1,4 +1,21 @@
 {% extends 'parent.html.twig' %}
 
 {% block content %}
+    <div class="row">
+        {% for categoryName, artworks in artworksByCategory %}
+            <div class="col-sm-12 mt-4 mb-2">
+                <h2>{{ categoryName }}</h2>
+            </div>
+
+            {% for artwork in artworks %}
+                <div class="col-sm-4 mb-4">
+                    {% include 'inc/card.html.twig' with { 'artwork': artwork } %}
+                </div>
+            {% endfor %}
+        {% endfor %}
+    </div>
+
+    <div class="row"></div>
+
+    <div class="row"></div>
 {% endblock %}

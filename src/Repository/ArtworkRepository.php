@@ -19,6 +19,18 @@ class ArtworkRepository extends ServiceEntityRepository
         parent::__construct($registry, Artwork::class);
     }
 
+    public function findByCategory(string $category)
+    {
+        return $this->createQueryBuilder('artwork')
+            ->join('artwork.category', 'category')
+            ->where('category.name = :name')
+            ->setParameters([
+                'name' => $category
+            ])
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return Artwork[] Returns an array of Artwork objects
     //  */
