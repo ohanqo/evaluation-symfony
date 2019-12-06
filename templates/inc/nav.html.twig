@@ -19,9 +19,9 @@
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                     <a class="dropdown-item" href="#">Tout</a>
-                    <a class="dropdown-item" href="#">Peinture</a>
-                    <a class="dropdown-item" href="#">Dessin</a>
-                    <a class="dropdown-item" href="#">Sculpture</a>
+                    {% for category in categories %}
+                        <a class="dropdown-item" href="#">{{ category.name }}</a>
+                    {% endfor %}
                 </div>
             </li>
 

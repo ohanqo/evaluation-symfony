@@ -29,15 +29,12 @@
                     <li>
                         <a href="#!">Tout</a>
                     </li>
-                    <li>
-                        <a href="#!">Peinture</a>
-                    </li>
-                    <li>
-                        <a href="#!">Dessin</a>
-                    </li>
-                    <li>
-                        <a href="#!">Scultpture</a>
-                    </li>
+
+                    {% for category in categories %}
+                        <li>
+                            <a href="#!">{{ category.name }}</a>
+                        </li>
+                    {% endfor %}
                 </ul>
             </div>
         </div>

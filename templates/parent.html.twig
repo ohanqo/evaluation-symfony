@@ -12,14 +12,14 @@
 </head>
 <body class="d-flex flex-column min-vh-100">
 
-{% include "inc/nav.html.twig" %}
+{{ render(controller('App\\Controller\\NavigationController:nav')) }}
 <div class="container flex-grow-1">
     <div class="row">
         {% block content %}
         {% endblock %}
     </div>
 </div>
-{% include "inc/footer.html.twig" %}
+{{ render(controller('App\\Controller\\NavigationController:footer')) }}
 
 {{ encore_entry_script_tags('app') }}
 
