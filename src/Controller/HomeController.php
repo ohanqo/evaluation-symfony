@@ -19,4 +19,12 @@ class HomeController extends AbstractController
             'artworks' => $artworks,
         ]);
     }
+
+    /**
+     * @Route("/legal", name="home.legal")
+     */
+    public function legal()
+    {
+        return $this->render('home/legal.html.twig');
+    }
 }

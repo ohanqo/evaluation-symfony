@@ -11,13 +11,13 @@
                         <a href="{{ url('home') }}">Accueil</a>
                     </li>
                     <li>
-                        <a href="#!">Expositions</a>
+                        <a href="{{ url('exhibition.index') }}">Expositions</a>
                     </li>
                     <li>
-                        <a href="#!">Contact</a>
+                        <a href="{{ url('contact.index') }}">Contact</a>
                     </li>
                     <li>
-                        <a href="#!">Mentions légales</a>
+                        <a href="{{ url('home.legal') }}">Mentions légales</a>
                     </li>
                 </ul>
 
@@ -26,12 +26,12 @@
                 <h5>Œuvres</h5>
                 <ul class="list-unstyled">
                     <li>
-                        <a href="#!">Tout</a>
+                        <a href="{{ url('artwork.index') }}">Tout</a>
                     </li>
 
                     {% for category in categories %}
                         <li>
-                            <a href="#!">{{ category.name }}</a>
+                            <a href="{{ url('category.show', {'id': category.id}) }}">{{ category.name }}</a>
                         </li>
                     {% endfor %}
                 </ul>
