@@ -1,0 +1,13 @@
+{% extends 'parent.html.twig' %}
+
+{% block content %}
+    <div class="col-sm-12">
+        {% include('inc/flash.message.html.twig') %}
+    </div>
+
+    <div class="col-sm-12 mt-3">
+        <h1 class="mb-3">Ajouter une œuvre</h1>
+
+        {% include('admin/artwork/form.html.twig') %}
+    </div>
+{% endblock %}

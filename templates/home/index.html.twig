@@ -2,6 +2,8 @@
 
 {% block content %}
     <div class="col-sm-12 my-5">
+        {% include('inc/flash.message.html.twig') %}
+
         <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
             <ol class="carousel-indicators">
                 {% for key, artwork in artworks %}

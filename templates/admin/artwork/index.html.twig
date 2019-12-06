@@ -1,0 +1,29 @@
+{% extends 'parent.html.twig' %}
+
+{% block content %}
+    <div class="col-sm-12">
+        {% include('inc/flash.message.html.twig') %}
+    </div>
+
+    <div class="col-sm-12 d-flex justify-content-between align-items-center my-3">
+        <h1>Gestion des œuvres</h1>
+
+        <div>
+            <a class="btn btn-primary" href="{{ url('admin.artwork.create') }}">
+                Ajouter une œuvre
+            </a>
+        </div>
+    </div>
+
+
+    {% for artwork in artworks %}
+        <div class="col-sm-4 mb-4">
+            {% include 'inc/card.html.twig' with { 'artwork': artwork } %}
+
+            <div class="text-right mt-2">
+                <a class="btn btn-warning" href="{{ url('admin.artwork.edit', { 'id': artwork.id }) }}">Modifier</a>
+                <a class="btn btn-danger" href="{{ url('admin.artwork.delete', { 'id': artwork.id }) }}">Supprimer</a>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}
