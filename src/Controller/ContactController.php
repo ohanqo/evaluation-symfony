@@ -7,26 +7,42 @@ use App\Repository\ArtworkRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Twig\Environment;
 
 class ContactController extends AbstractController
 {
+    private $artworkRepository;
+    private $mailer;
+    private $twig;
+
+    public function __construct(
+        ArtworkRepository $artworkRepository,
+        \Swift_Mailer $mailer,
+        Environment $twig
+    )
+    {
+        $this->artworkRepository = $artworkRepository;
+        $this->mailer = $mailer;
+        $this->twig = $twig;
+    }
+
     /**
      * @Route("/contact", name="contact.index")
      */
-    public function index(Request $request, \Swift_Mailer $mailer, ArtworkRepository $artworkRepository)
+    public function index(Request $request)
     {
         $form = $this->createForm(ContactType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->sendConfirmationMail($mailer);
+            $this->sendConfirmationMail($form->getData());
 
             $this->addFlash('notice', '✅ Un email de confirmation vous a été envoyé!');
 
             return $this->redirectToRoute('home');
         }
 
-        $artwork = $artworkRepository->findOneBy([]);
+        $artwork = $this->artworkRepository->findOneBy([]);
 
         return $this->render('contact/index.html.twig', [
             'form' => $form->createView(),
@@ -34,7 +50,7 @@ class ContactController extends AbstractController
         ]);
     }
 
-    private function sendConfirmationMail(\Swift_Mailer $mailer)
+    private function sendConfirmationMail($data)
     {
         $message = new \Swift_Message();
 
@@ -42,8 +58,10 @@ class ContactController extends AbstractController
             ->setFrom('hello@titosalgado.com')
             ->setContentType('text/html')
             ->setSubject('Message bien reçu')
-            ->setBody('Message bien reçu');
+            ->setBody($this->twig->render('emailing/contact.html.twig', [
+                'data' => $data
+            ]));
 
-        $mailer->send($message);
+        $this->mailer->send($message);
     }
 }
